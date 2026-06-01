@@ -120,5 +120,21 @@
       </article>
     </div>
   </section>
+
+  <script>
+    // Envoie la hauteur réelle du contenu à la page parente (Elementor)
+    // pour que l'iframe s'ajuste automatiquement, sans espace blanc.
+    function sendHeight() {
+      var height = document.documentElement.scrollHeight;
+      parent.postMessage({ type: "rencontres-height", height: height }, "*");
+    }
+
+    window.addEventListener("load", sendHeight);
+    window.addEventListener("resize", sendHeight);
+
+    if (window.ResizeObserver) {
+      new ResizeObserver(sendHeight).observe(document.body);
+    }
+  </script>
 </body>
 </html>
